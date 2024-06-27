@@ -25,6 +25,14 @@ interface TransactionRequestBody {
     fromAddress: string;
 }
 
+interface TransactionStatusRequestBody {
+    txHash: string;
+    bridge?: string;
+    fromChain?: number | string;
+    toChain?: number | string;
+
+}
+
 // Route to get quotes for a bridge transaction
 app.post('/get_quotes', async (req: Request, res: Response) => {
   const { fromAddress, fromChain, toChain, fromToken, toToken, fromAmount }: QuoteRequestBody = req.body;
@@ -48,7 +56,7 @@ app.post('/get_quotes', async (req: Request, res: Response) => {
 });
 
 // Route to execute a bridge transaction
-// app.post('/execute-transaction', async (req: Request, res: Response) => {
+// app.post('/execute_transaction', async (req: Request, res: Response) => {
 //   const { fromChainId, toChainId, fromTokenAddress, toTokenAddress, fromAmount, fromAddress }: TransactionRequestBody = req.body;
 //   try {
 //     const route = {
@@ -81,20 +89,24 @@ app.post('/get_quotes', async (req: Request, res: Response) => {
 //   }
 // });
 
-// Route to get the status of a transaction
-// app.get('/transaction-status/:transactionId', async (req: Request, res: Response) => {
-//   const { transactionId } = req.params;
-//   try {
-//     const status = await getStatus(transactionId);
-//     res.json(status);
-//   } catch (error: unknown) {
-//     if (error instanceof Error) {
-//       res.status(500).json({ error: error.message });
-//     } else {
-//       res.status(500).json({ error: 'Unknown error' });
-//     }
-//   }
-// });
+// Route to get the status of a bridge transaction
+app.post('/transaction_status', async (req: Request, res: Response) => {
+    const { txHash, bridge, toChain, fromChain }: TransactionStatusRequestBody = req.body;
+  try {
+    const status = await getStatus(
+        {
+            txHash: txHash
+        }
+    );
+    res.json(status);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res.status(500).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: 'Unknown error' });
+    }
+  }
+});
 
 app.listen(port, () => {
   console.log(`Li-Fi API listening at http://localhost:${port}`);

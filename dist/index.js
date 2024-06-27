@@ -18,16 +18,16 @@ const app = (0, express_1.default)();
 const port = 3001;
 app.use(express_1.default.json());
 // Route to get quotes for a bridge transaction
-app.post('/get-quotes', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post('/get_quotes', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { fromAddress, fromChain, toChain, fromToken, toToken, fromAmount } = req.body;
     try {
         const quotes = yield (0, sdk_1.getQuote)({
-            fromAddress,
-            fromChain,
-            toChain,
+            fromChain: parseInt(fromChain),
+            toChain: parseInt(toChain),
             fromToken,
             toToken,
             fromAmount,
+            fromAddress,
         });
         res.json(quotes);
     }

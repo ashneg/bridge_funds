@@ -7,14 +7,13 @@ const port = 3001;
 app.use(express.json());
 
 // const lifi = new LiFiSDK({}); 
-
 interface QuoteRequestBody {
-  fromAddress: string;
-  fromChain: string;
-  toChain: string;
-  fromToken: string;
-  toToken: string;  
-  fromAmount: string;
+    fromChain: string;
+    toChain: string;
+    fromToken: string;
+    toToken: string;  
+    fromAmount: string;
+    fromAddress: string;
 }
 
 interface TransactionRequestBody {
@@ -31,12 +30,12 @@ app.post('/get_quotes', async (req: Request, res: Response) => {
   const { fromAddress, fromChain, toChain, fromToken, toToken, fromAmount }: QuoteRequestBody = req.body;
   try {
     const quotes = await getQuote({
-        fromAddress,
-        fromChain,
-        toChain,
+        fromChain: parseInt(fromChain),
+        toChain: parseInt(toChain),
         fromToken,
         toToken,
         fromAmount,
+        fromAddress,
     });
     res.json(quotes);
   } catch (error: unknown) {

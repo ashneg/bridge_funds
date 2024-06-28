@@ -8,7 +8,7 @@
       "skipLibCheck": true,
     },
     "include": [
-      "index.ts"  // Adjust this path based on your actual project structure
+      "app.ts"
     ],
     "exclude": ["node_modules"],
   }

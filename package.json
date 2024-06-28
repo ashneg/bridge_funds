@@ -1,7 +1,7 @@
 {
   "name": "bridge_funds",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "app.ts",
   "repository": "git@github.com:ashneg/bridge_funds.git",
   "author": "Ashutosh <ashcbneg@gmail.com>",
   "license": "MIT",
@@ -12,12 +12,12 @@
     "typescript": "^5.5.2"
   },
   "scripts": {
-  "start": "node index.js",
+  "start": "tsc && node dist/app.js",
   "build": "tsc",
   "postinstall": "npm run build"
 },
   "dependencies": {
-    "@lifi/sdk": "^1.0.0",
+    "@lifi/sdk": "^3.0.0",
     "express": "^4.19.0"
   }
 }

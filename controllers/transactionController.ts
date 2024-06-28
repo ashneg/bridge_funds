@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { fetchQuote, fetchTransactionStatus, QuoteRequestBody, TransactionStatusRequestBody } from '../models/models';
+import { fetchQuote, fetchTransactionStatus, QuoteRequestBody, executeTransaction, TransactionRequestBody, TransactionStatusRequestBody } from '../models/models';
 import { configureClient } from '../config/config';
 
 // Setup wallet client
@@ -37,19 +37,19 @@ export async function getQuotes(req: Request, res: Response) {
   }
 }
 
-// export async function executeBridgeTransaction(req: Request, res: Response) {
-//   const { fromChainId, toChainId, fromTokenAddress, toTokenAddress, fromAmount, fromAddress }: TransactionRequestBody = req.body;
-//   try {
-//     const transaction = await executeTransaction({ fromChainId, toChainId, fromTokenAddress, toTokenAddress, fromAmount, fromAddress });
-//     res.json(transaction);
-//   } catch (error: unknown) {
-//     if (error instanceof Error) {
-//       res.status(500).json({ error: error.message });
-//     } else {
-//       res.status(500).json({ error: 'Unknown error' });
-//     }
-//   }
-// }
+export async function executeBridgeTransaction(req: Request, res: Response) {
+  const { fromChainId, toChainId, fromTokenAddress, toTokenAddress, fromAmount, fromAddress }: TransactionRequestBody = req.body;
+  try {
+    const transaction = await executeTransaction({ fromChainId, toChainId, fromTokenAddress, toTokenAddress, fromAmount, fromAddress });
+    res.json(transaction);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res.status(500).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: 'Unknown error' });
+    }
+  }
+}
 
 // Get transaction status
 export async function getTransactionStatus(req: Request, res: Response) {

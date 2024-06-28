@@ -9,6 +9,7 @@ const router = express_1.default.Router();
 router.get('/', (req, res) => {
     res.send('API is running');
 });
+router.post('/setup_client', transactionController_1.setupClient);
 router.post('/get_quotes', transactionController_1.getQuotes);
 // router.post('/execute_transaction', executeBridgeTransaction);
 router.post('/transaction_status', transactionController_1.getTransactionStatus);

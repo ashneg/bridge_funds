@@ -51,9 +51,9 @@
     viem "^2.16.2"
 
 "@lifi/types@^13.17.0":
-  version "13.17.0"
-  resolved "https://registry.yarnpkg.com/@lifi/types/-/types-13.17.0.tgz#99076f8f365f3a0ca4191d9ee1380e154b485241"
-  integrity sha512-2jjCPwggnjuLvCeg8MSjhrwsSZSz4gvsH4amK1jYYjTbZzAZzPJK7Iw1sVr8VqQo94KSQNCwcOf6Wq0oJYuclA==
+  version "13.17.1"
+  resolved "https://registry.yarnpkg.com/@lifi/types/-/types-13.17.1.tgz#4745615ac6dd7cfc15c9b864d7496409d7ee0487"
+  integrity sha512-w3UCUzHMCMDq4CjxlawBQsAkSv22z2Kflb/NbhnhzKrMqtFAaxgW+82hEGs+Vlbyrzi6F6M2PEkkayzJioSCBQ==
 
 "@noble/curves@1.2.0", "@noble/curves@~1.2.0":
   version "1.2.0"
@@ -132,9 +132,9 @@
     "@wallet-standard/features" "^1.0.3"
 
 "@solana/web3.js@^1.93.2":
-  version "1.93.3"
-  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.93.3.tgz#932e6cb1ffe223cd29d90253236e09f78e54fb43"
-  integrity sha512-7ASJ3QdZPnWdTMnU//fnsvviKBSAnF57D2AorZPReN7gb820UlT07Na5dAoXymjkuOYZN6Iyw8vrc/jv+2HZnQ==
+  version "1.93.4"
+  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.93.4.tgz#f16c9f8584e3bd518186e95c4a6347e269dede4f"
+  integrity sha512-6hHtSYmkUPwcm3eGeqBanMT3pDAhTprrm2IUoboSjNN4gKCBEkY9uIeS2TZKLpsGY+R6fDub5pRi+e4xFVv55w==
   dependencies:
     "@babel/runtime" "^7.24.7"
     "@noble/curves" "^1.4.0"

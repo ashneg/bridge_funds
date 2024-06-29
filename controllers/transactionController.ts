@@ -4,14 +4,14 @@ import { configureClient } from '../config/config';
 
 // Setup wallet client
 export const setupClient = (req: Request, res: Response) => {
-    const { privateKey } = req.body;
+    const { privateKey, chainId } = req.body;
   
     if (!privateKey) {
       return res.status(400).json({ error: 'Private key is required' });
     }
   
     try {
-      const client = configureClient(privateKey);
+      const client = configureClient(privateKey, chainId);
       res.json({ message: 'Client configured successfully', client });
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -20,7 +20,7 @@ export const setupClient = (req: Request, res: Response) => {
         res.status(500).json({ error: 'Unknown error' });
       }
     }
-  };
+};
 
 // Get quotes for a transaction
 export async function getQuotes(req: Request, res: Response) {
@@ -38,8 +38,11 @@ export async function getQuotes(req: Request, res: Response) {
 }
 
 export async function executeBridgeTransaction(req: Request, res: Response) {
-  const { fromChainId, toChainId, fromTokenAddress, toTokenAddress, fromAmount, fromAddress }: TransactionRequestBody = req.body;
+  const { fromChainId, toChainId, fromTokenAddress, toTokenAddress, fromAmount, fromAddress, privateKey }: TransactionRequestBody = req.body;
   try {
+    if (privateKey) {
+      await configureClient(privateKey, fromChainId);
+    }
     const transaction = await executeTransaction({ fromChainId, toChainId, fromTokenAddress, toTokenAddress, fromAmount, fromAddress });
     res.json(transaction);
   } catch (error: unknown) {

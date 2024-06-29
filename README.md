@@ -1,16 +1,27 @@
 # bridge_funds
 
+## Setup
+
+- docker build -t bridge_funds .
+- docker run -p 3001:3001 bridge_funds
+
+
+
+## Endpoints
+
+## 
+
 
 endpoints: 
 
 Request body
 
 {
-    "fromChain": 42161, // Arbitrum
-    "toChain": 10, // Optimism
-    "fromToken": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831", // USDC on Arbitrum
-    "toToken": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1", // DAI on Optimism
-    "fromAmount": "10000000", // 10 USDC
+    "fromChainId": 42161, // Arbitrum
+    "toChainId": 10, // Optimism
+    "fromTokenAddress": "0xaf88d065e77c8cc2239327c5edb3a432268e5831", // USDC on Arbitrum
+    "toTokenAddress": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85", // DAI on Optimism
+    "fromAmount": "1000000", // 10 USDC
     // The address from which the tokens are being transferred.
-    "fromAddress": "0x552008c0f6870c2f77e5cC1d2eb9bdff03e30Ea0"
+    "fromAddress": "0x76Ee52c095152525cF6f1aCb91C6a30E6Dc9a8b5"
 }

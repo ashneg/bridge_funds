@@ -1,4 +1,4 @@
-import { getQuote, executeRoute, getStatus, _InsuranceState , Insurance} from '@lifi/sdk'; // Adjust based on actual SDK usage
+import { getQuote, executeRoute, getStatus, _InsuranceState , Insurance, getRoutes} from '@lifi/sdk'; // Adjust based on actual SDK usage
 
 export interface QuoteRequestBody {
   fromChain: string;
@@ -16,7 +16,7 @@ export interface TransactionRequestBody {
   toTokenAddress: string;
   fromAmount: string;
   fromAddress: string;
-  executionPriority?: number;
+  privateKey?: string;
 }
 
 export interface TransactionStatusRequestBody {
@@ -39,42 +39,24 @@ export async function fetchQuote(data: QuoteRequestBody) {
 }
 
 export async function executeTransaction(data: TransactionRequestBody) {
-  const availableRoute = await getQuote({
-    fromChain: data.fromChainId,
-    toChain: data.toChainId,
-    fromToken: data.fromTokenAddress,
-    toToken: data.toTokenAddress,
+
+  const availableRoute = await getRoutes({
+    fromChainId: data.fromChainId,
+    toChainId: data.toChainId,
+    fromTokenAddress: data.fromTokenAddress,
+    toTokenAddress: data.toTokenAddress,
     fromAmount: data.fromAmount,
     fromAddress: data.fromAddress,
   });
 
-  const uniqueId = Math.floor(Math.random() * 1000000);
-  const bridgeInsurance = {
-    state: _InsuranceState[2],
-    feeAmountUsd : "0",
-  }
+  const bestRoute = availableRoute.routes[0]
 
-  const transactionBody = {
-    id: uniqueId.toString(),
-    fromAmountUSD: '10',
-    fromChainId: data.fromChainId,
-    toChainId: data.toChainId,
-    fromAddress: data.fromTokenAddress,
-    toAddress: data.toTokenAddress,
-    fromAmount: data.fromAmount,
-    insurance: bridgeInsurance,
-    fromToken: availableRoute.action.fromToken,
-    toAmountUSD: '',
-    toAmount: '',
-    toAmountMin: '',
-    toToken: availableRoute.action.toToken,
-    steps: [],
-  }
-
-  const executedRoute = await executeRoute(transactionBody, {
+  const executedRoute = await executeRoute(bestRoute, {
     // Gets called once the route object gets new updates
-    updateRouteHook(availableRoute) {
-      console.log(executeRoute);
+    updateRouteHook(bestRoute) {
+      console.log("===============Route updated==============");
+      console.log(bestRoute);
+      console.log("===============END========================");
     },
   });
 

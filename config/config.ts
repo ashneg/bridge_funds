@@ -6,30 +6,39 @@ import { arbitrum, mainnet, optimism, polygon, scroll } from 'viem/chains';
 
 const chains = [arbitrum, mainnet, optimism, polygon, scroll];
 
-export const configureClient = (privateKey: string) => {
+export async function configureClient(privateKey: string, chainId: number) {
   const account = privateKeyToAccount(`0x${privateKey}`);
+
+  const chain = chains.find((chain) => chain.id === chainId);
+  if (!chain) {
+    throw new Error(`Chain with id ${chainId} not found`);
+  }
 
   const client = createWalletClient({
     account,
-    chain: mainnet,
+    chain,
     transport: http(),
   });
 
-  createConfig({
-    integrator: 'Bridge Funds',
+  await createConfig({
+    integrator: 'BridgeFunds',
     providers: [
       EVM({
         getWalletClient: async () => client,
-        switchChain: async (chainId) =>
-          // Switch chain by creating a new wallet client
-          createWalletClient({
+        switchChain: async (newChainId) => {
+          const newChain = chains.find((chain) => chain.id == newChainId);
+          if (!newChain) {
+            throw new Error(`Chain with id ${newChainId} not found`);
+          }
+          return createWalletClient({
             account,
-            chain: chains.find((chain) => chain.id == chainId) as Chain,
+            chain: newChain,
             transport: http(),
-          }),
+          });
+        },
       }),
     ],
   });
 
   return client;
-};
+}

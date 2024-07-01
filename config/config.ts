@@ -2,9 +2,9 @@ import { createConfig, EVM } from '@lifi/sdk';
 import type { Chain } from 'viem';
 import { createWalletClient, http } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
-import { arbitrum, mainnet, optimism, polygon, scroll } from 'viem/chains';
+import { arbitrum, mainnet, optimism, polygon, scroll, mantle } from 'viem/chains';
 
-const chains = [arbitrum, mainnet, optimism, polygon, scroll];
+const chains = [arbitrum, mainnet, optimism, polygon, scroll, mantle];
 
 export async function configureClient(privateKey: string, chainId: number) {
   const account = privateKeyToAccount(`0x${privateKey}`);
